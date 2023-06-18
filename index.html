@@ -169,7 +169,7 @@
                 Для удобства обращения из JS, вы можете добавить контейнерам id
                 или уникальные классы
             -->
-            <div class="container" style="display: none">
+            <div class="container container--server-is-not-available" style="display: none">
                 <div class="message">
                     <span class="message__icon">
                         <svg width="60" height="60" aria-hidden="true">
@@ -190,9 +190,8 @@
                             data-delay="300">
                             <div class="tabs__controls" data-tabs="controls">
                                 <!-- При переключении с продавцов на покупателей и обратно нужно выделить активный пункт .is-active -->
-                                <button class="tabs__control btn is-active" type="button"
-                                    data-tabs="control">Купить</button>
-                                <button class="tabs__control btn" type="button" data-tabs="control">Продать</button>
+                                <button class="tabs__control btn is-active" type="button" data-tabs="control" id="buy">Купить</button>
+                                <button class="tabs__control btn" type="button" data-tabs="control" id="sell">Продать</button>
                             </div>
                         </div>
                     </div>
@@ -208,9 +207,8 @@
                             data-delay="300">
                             <!-- При переключении с карты на список и обратно нужно выделить активный пункт .is-active -->
                             <div class="tabs__controls" data-tabs="controls">
-                                <button class="tabs__control btn is-active" type="button"
-                                    data-tabs="control">Cписок</button>
-                                <button class="tabs__control btn" type="button" data-tabs="control">Карта</button>
+                                <button class="tabs__control btn is-active" type="button" data-tabs="control" id="show-list">Cписок</button>
+                                <button class="tabs__control btn" type="button" data-tabs="control" id="show-map">Карта</button>
                             </div>
                         </div>
                     </div>
@@ -252,7 +250,7 @@
             </div>
 
             <!-- При переключении на карту нужно отобразить данный контейнер -->
-            <div class="container" style="display: none">
+            <div class="container container--map" style="display: none">
                 <div class="map">
                     <!--
                         Карту нужно отрисовать в этот контейнер. Иконки для карты -
@@ -565,8 +563,7 @@
             </td>
             <td class="users-list__table-cell users-list__table-currency">keks</td>
             <td class="users-list__table-cell users-list__table-exchangerate">9 999 999&nbsp;₽</td>
-            <td class="users-list__table-cell users-list__table-cashlimit">9 999
-                999&nbsp;₽&nbsp;-&nbsp;9 999 999 000&nbsp;₽</td>
+            <td class="users-list__table-cell users-list__table-cashlimit">9 999 999&nbsp;₽&nbsp;-&nbsp;9 999 999 000&nbsp;₽</td>
             <td class="users-list__table-cell users-list__table-payments">
                 <ul class="users-list__badges-list">
                     <li class="users-list__badges-item badge">BitTransfer</li>
@@ -575,8 +572,7 @@
                 </ul>
             </td>
             <td class="users-list__table-cell users-list__table-btn">
-                <button class="btn btn--greenborder" type="button">Обменять
-                </button>
+                <button class="btn btn--greenborder" type="button">Обменять</button>
             </td>
         </tr>
     </template>
@@ -595,12 +591,17 @@
                 </svg>
                 <span>Неопознанный енот</span>
             </span>
-            <p class="user-card__cash-item"><span class="user-card__cash-label">Валюта</span><span
-                    class="user-card__cash-data">KEKS</span></p>
-            <p class="user-card__cash-item"><span class="user-card__cash-label">Курс</span><span
-                    class="user-card__cash-data">9 999 999 ₽</span></p>
-            <p class="user-card__cash-item"><span class="user-card__cash-label">Лимит</span><span
-                    class="user-card__cash-data">9 900 ₽ – 9 900 000 000 ₽</span></p>
+            <p class="user-card__cash-item">
+              <span class="user-card__cash-label">Валюта</span>
+              <span class="user-card__cash-data user-card__cash-currency">KEKS</span>
+            </p>
+            <p class="user-card__cash-item">
+              <span class="user-card__cash-label">Курс</span>
+              <span class="user-card__cash-data user-card__cash-exchangerate">9 999 999 ₽</span>
+            </p>
+            <p class="user-card__cash-item">
+              <span class="user-card__cash-label">Лимит</span>
+              <span class="user-card__cash-data user-card__cash-cashlimit">9 900 ₽ – 9 900 000 000 ₽</span></p>
             <ul class="user-card__badges-list">
                 <li class="user-card__badges-item badge">BitTransfer</li>
                 <li class="user-card__badges-item badge">CryptoEx</li>

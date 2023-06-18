@@ -9,7 +9,7 @@ const Method = {
   POST: 'POST',
 };
 const ErrorText = {
-  GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
+  GET_USER_DATA: 'Не удалось загрузить данные пользователя. Попробуйте обновить страницу',
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
 
@@ -22,11 +22,13 @@ const load = (route, errorText, method = Method.GET, body = null) =>
       return response.json();
     })
     .catch(() => {
-      throw new Error(errorText);
+      if (errorText) {
+        throw new Error(errorText);
+      }
     });
 
-const getUserData = () => load(Route.GET_USER_DATA, ErrorText.GET_DATA);
-const getContractorsData = () => load(Route.GET_CONTRACTORS_DATA, ErrorText.GET_DATA);
+const getUserData = () => load(Route.GET_USER_DATA, ErrorText.GET_USER_DATA);
+const getContractorsData = () => load(Route.GET_CONTRACTORS_DATA);
 
 const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, Method.POST, body);
 

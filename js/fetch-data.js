@@ -1,6 +1,9 @@
 import {getUserData, getContractorsData} from './api.js';
 import {showAlert} from './utils.js';
 import {showUserParameters} from './show-user-parameters.js';
+import {showServerIsNotAvailableMessage, deleteServerIsNotAvailableMessage} from './server-is-not-available-message.js';
+import {beginListenListTypeButtons} from './toogle-list-map.js';
+import {addCounterpartiesList, addMapPointBaloon} from './add-counterparties-list.js';
 
 const fetchUserData = async () => {
   try {
@@ -16,8 +19,13 @@ const fetchContractorsData = async () => {
   try {
     const responseContractorsData = await getContractorsData();
     console.log(responseContractorsData);
+    deleteServerIsNotAvailableMessage();
+    addCounterpartiesList(responseContractorsData);
+    addMapPointBaloon(responseContractorsData[2]);
+    beginListenListTypeButtons();
   } catch (err) {
-    showAlert(err.message);
+    showServerIsNotAvailableMessage();
+    //showAlert(err.message);
   }
 };
 
