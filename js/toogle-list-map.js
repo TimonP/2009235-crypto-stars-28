@@ -1,3 +1,5 @@
+import {resetMapSize} from './add-map.js';
+
 const listTypeButtonsWrapper = document.querySelector('.tabs--toggle-list-map');
 const listTypeButtons = listTypeButtonsWrapper.querySelectorAll('.tabs__control');
 const tableHeaderDiv = document.querySelector('.users-list');
@@ -17,6 +19,7 @@ const listenListTypeButtons = (listTypeButton) => {
     if (evt.target.id === 'show-map') {
       tableHeaderDiv.style.display = 'none';
       mapDiv.style.display = null;
+      resetMapSize();
     }
   });
 };

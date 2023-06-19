@@ -2,9 +2,9 @@ const ALERT_SHOW_TIME = 5000;
 const DEBOUNSE_DEFAULT_TIME = 500;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
-
 const isEnterKey = (evt) => evt.key === 'Enter';
 
+//мб убрать в конце
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';

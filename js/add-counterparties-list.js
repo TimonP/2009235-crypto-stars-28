@@ -65,8 +65,6 @@ const createCounterpartyElement = (counterpartyElement, counterparty, classes) =
   }
 
   counterpartyElement.dataset.counterpartyId = counterparty.id;
-
-  return counterpartyElement;
 };
 
 const addCounterpartiesList = (counterpartiesData) => {
@@ -85,7 +83,6 @@ const addCounterpartiesList = (counterpartiesData) => {
 const addMapPointBaloon = (counterparty) => {
   const counterpartyMapBaloonElement = newBaloonTemplate.cloneNode(true);
   createCounterpartyElement(counterpartyMapBaloonElement, counterparty, findClassesUsed('mapBaloon'));
-  console.log(counterpartyMapBaloonElement);
 
   return counterpartyMapBaloonElement;
 };

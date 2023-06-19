@@ -1,4 +1,4 @@
-import {fetchUserData, fetchContractorsData} from './fetch-data.js';
+import {fetchData} from './fetch-data.js';
 
-fetchUserData();
-fetchContractorsData();
+fetchData();
+

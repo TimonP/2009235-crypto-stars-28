@@ -1,32 +1,31 @@
 import {getUserData, getContractorsData} from './api.js';
-import {showAlert} from './utils.js';
 import {showUserParameters} from './show-user-parameters.js';
 import {showServerIsNotAvailableMessage, deleteServerIsNotAvailableMessage} from './server-is-not-available-message.js';
 import {beginListenListTypeButtons} from './toogle-list-map.js';
-import {addCounterpartiesList, addMapPointBaloon} from './add-counterparties-list.js';
+import {addCounterpartiesList} from './add-counterparties-list.js';
+import {createPoints, initMap} from './add-map.js';
+import {saveСounterpartiesData ,findModalOpenElements} from './modal-close-open.js';
+import {saveUserData} from './modal-check-and-autocomplete.js';
 
-const fetchUserData = async () => {
+const fetchData = async () => {
   try {
     const responseUserData = await getUserData();
     console.log(responseUserData);
     showUserParameters(responseUserData);
-  } catch (err) {
-    showAlert(err.message);
-  }
-};
+    saveUserData(responseUserData);
 
-const fetchContractorsData = async () => {
-  try {
     const responseContractorsData = await getContractorsData();
     console.log(responseContractorsData);
     deleteServerIsNotAvailableMessage();
     addCounterpartiesList(responseContractorsData);
-    addMapPointBaloon(responseContractorsData[2]);
+    initMap();
+    createPoints(responseContractorsData);
     beginListenListTypeButtons();
+    saveСounterpartiesData(responseContractorsData);
+    findModalOpenElements();
   } catch (err) {
     showServerIsNotAvailableMessage();
-    //showAlert(err.message);
   }
 };
 
-export {fetchUserData, fetchContractorsData};
+export {fetchData};
