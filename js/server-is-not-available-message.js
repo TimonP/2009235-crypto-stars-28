@@ -1,10 +1,9 @@
-const main = document.querySelector('main');
+const main = document.querySelector('.main');
 const userProfile = document.querySelector('.container--server-is-not-available');
-const containers = document.querySelectorAll('main .container');
+const containers = main.querySelectorAll('.container');
 
 const showServerIsNotAvailableMessage = () => {
   containers.forEach((container) => {
-    //container.style.display = 'none';
     container.remove();
   });
   main.appendChild(userProfile);

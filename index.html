@@ -135,7 +135,7 @@
                             <svg width="20" height="20" aria-hidden="true">
                                 <use xlink:href="#icon-kekscoin"></use>
                             </svg>
-                            <span id="user-crypto-balance">
+                            <span class="user-profile__cash-balance--keks">
                                 <!-- Вставьте сюда количество криптомонет пользователя -->
                             </span>
                             <span class="visually-hidden">кекскоин</span>
@@ -144,7 +144,7 @@
                             <svg width="20" height="20" aria-hidden="true">
                                 <use xlink:href="#icon-rub"></use>
                             </svg>
-                            <span id="user-fiat-balance">
+                            <span class="user-profile__cash-balance--rub">
                                 <!-- Вставьте сюда количество денег у пользователя  -->
                             </span>
                             <span class="visually-hidden">рубль</span>
@@ -161,7 +161,7 @@
                 </div>
             </div>
         </header>
-        <main>
+        <main class="main">
             <h1 class="visually-hidden">Пользователи биржи</h1>
 
             <!--
@@ -297,7 +297,7 @@
             <div class="modal__content">
                 <h2 class="modal__description">Покупка криптовалюты</h2>
                 <!-- Не забудьте указать верный action-атрибут -->
-                <form class="modal-buy" method="post">
+                <form class="modal-buy" method="post" enctype="multipart/form-data" autocomplete="off" action="https://cryptostar.grading.pages.academy/">
                     <!--
                         Обратите внимание, что всем полям для отправки на сервер нужно указать
                         атрибуты name (их список вы найдёте в техзадании), а часть полей
@@ -311,8 +311,8 @@
 
                     <div class="transaction-info">
                         <p class="transaction-info__item transaction-info__item--name"><span
-                                class="transaction-info__label">Пользователь</span><span class="transaction-info__data">
-                                <svg width="20" height="20" aria-hidden="true">
+                                class="transaction-info__label">Пользователь</span><span class="transaction-info__data transaction-info__data--name">
+                                <svg class="transaction-info__data--icon" width="20" height="20" aria-hidden="true">
                                     <use xlink:href="#icon-star"></use>
                                 </svg>John Smith</span></p>
                         <p class="transaction-info__item transaction-info__item--exchangerate"><span
@@ -327,9 +327,9 @@
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Оплата</span><span
                                         class="custom-input__unit">₽</span>
-                                    <button class="btn btn--textblue custom-input__btn" type="button">обменять все
+                                    <button class="btn btn--textblue custom-input__btn" type="button" id="buy-sending-amount-all">обменять все
                                     </button>
-                                    <input type="number" value="" placeholder="0">
+                                    <input type="number" value="" placeholder="0" name="sendingAmount" required id="buy-sending-amount" step="any">
                                 </label>
                                 <!-- Пример стилизации ошибки валидации -->
                                 <div class="custom-input__error">Минимальная сумма — 9 999 999 ₽</div>
@@ -342,7 +342,7 @@
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Зачисление</span><span
                                         class="custom-input__unit">KEKS</span>
-                                    <input type="number" placeholder="0">
+                                    <input type="number" placeholder="0" name="receivingAmount" required id="buy-receiving-amount" step="any">
                                 </label>
                             </div>
                         </div>
@@ -355,7 +355,7 @@
                                     которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                                     остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                                 -->
-                                <select>
+                                <select name="paymentMethod" required id="counterparty-paymentMethods-provider">
                                     <option selected disabled>Выберите платёжную систему</option>
                                     <option>CryptoEx</option>
                                     <option>Первый криптобанк</option>
@@ -368,21 +368,21 @@
                             <div class="custom-input">
                                 <!-- В случае, если выбрана оплата наличными, поле нужно оставить пустым -->
                                 <label><span class="custom-input__label">Номер банковской карты пользователя</span>
-                                    <input type="number" placeholder="1234 5678 9012 3456" disabled>
+                                    <input type="text" placeholder="1234 5678 9012 3456" disabled id="counterparty-paymentMethods-accountNumber">
                                 </label>
                             </div>
                         </div>
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Номер криптокошелька пользователя</span>
-                                    <input type="number" placeholder="08701943851-9832345" disabled>
+                                    <input type="text" placeholder="08701943851-9832345" disabled id="user-wallet-address">
                                 </label>
                             </div>
                         </div>
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Платёжный пароль</span>
-                                    <input type="password" value="123456" placeholder="Введите пароль">
+                                    <input type="password" value="123456" placeholder="Введите пароль" name="paymentPassword" required>
                                 </label>
                             </div>
                         </div>
@@ -425,7 +425,7 @@
             <div class="modal__content">
                 <h2 class="modal__description">Продажа криптовалюты</h2>
                 <!-- Не забудьте указать верный action-атрибут -->
-                <form class="modal-sell" method="post">
+                <form class="modal-sell" method="post" enctype="multipart/form-data" autocomplete="off" action="https://cryptostar.grading.pages.academy/">
                     <!--
                         Обратите внимание, что всем полям для отправки на сервер нужно указать
                         атрибуты name (их список вы найдёте в техзадании), а часть полей
@@ -440,8 +440,8 @@
                     <div class="transaction-info">
                         <p class="transaction-info__item transaction-info__item--name">
                             <span class="transaction-info__label">Пользователь</span>
-                            <span class="transaction-info__data">
-                                <svg width="20" height="20" aria-hidden="true">
+                            <span class="transaction-info__data transaction-info__data--name">
+                                <svg class="transaction-info__data--icon" width="20" height="20" aria-hidden="true">
                                     <use xlink:href="#icon-star"></use>
                                 </svg>
                                 John Smith
@@ -463,9 +463,9 @@
                                 <label>
                                     <span class="custom-input__label">Оплата</span>
                                     <span class="custom-input__unit">KEKS</span>
-                                    <button class="btn btn--textblue custom-input__btn" type="button">обменять
+                                    <button class="btn btn--textblue custom-input__btn" type="button" id="sell-sending-amount-all">обменять
                                         все</button>
-                                    <input type="number" value="" placeholder="0">
+                                    <input type="number" value="" placeholder="0" name="sendingAmount" required id="sell-sending-amount" step="any">
                                 </label>
                                 <div class="custom-input__error">Минимальная сумма — 9 999 999 ₽</div>
                             </div>
@@ -477,9 +477,9 @@
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Зачисление</span><span
                                         class="custom-input__unit">₽</span>
-                                    <button class="btn btn--textblue custom-input__btn" type="button">обменять все
+                                    <button class="btn btn--textblue custom-input__btn" type="button" id="sell-receiving-amount-all">обменять все
                                     </button>
-                                    <input type="number" value="" placeholder="0">
+                                    <input type="number" value="" placeholder="0" name="receivingAmount" required id="sell-receiving-amount" step="any">
                                 </label>
                             </div>
                         </div>
@@ -488,7 +488,7 @@
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Номер криптокошелька пользователя</span>
-                                    <input type="number" placeholder="08701943851-983457-2345" disabled>
+                                    <input type="text" placeholder="08701943851-983457-2345" disabled id="counterparty-wallet-address">
                                 </label>
                             </div>
                         </div>
@@ -499,7 +499,7 @@
                                     которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                                     остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                                 -->
-                                <select>
+                                <select required id="user-paymentMethods-provider">
                                     <option selected disabled>Выберите платёжную систему</option>
                                     <option>CryptoEx</option>
                                     <option>Первый криптобанк</option>
@@ -512,14 +512,14 @@
                             <div class="custom-input">
                                 <!-- В случае, если выбрана оплата наличными, поле нужно оставить пустым -->
                                 <label><span class="custom-input__label">Номер банковской карты пользователя</span>
-                                    <input type="number" placeholder="1234 5678 9012 3456" disabled>
+                                    <input type="text" placeholder="1234 5678 9012 3456" disabled id="user-paymentMethods-accountNumber">
                                 </label>
                             </div>
                         </div>
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Платёжный пароль</span>
-                                    <input type="password" placeholder="Введите пароль">
+                                    <input type="password" placeholder="Введите пароль" name="paymentPassword" required>
                                 </label>
                             </div>
                         </div>
@@ -557,7 +557,7 @@
         <tr class="users-list__table-row">
             <td class="users-list__table-cell users-list__table-name">
                 <!-- Обратите внимание, что "звёздочка только" у верифицированных пользователей -->
-                <svg width="20" height="20" aria-hidden="true">
+                <svg class="users-list__table-icon" width="20" height="20" aria-hidden="true">
                     <use xlink:href="#icon-star"></use>
                 </svg>
                 <span>John Smith</span>
@@ -587,7 +587,7 @@
         <div class="user-card">
             <span class="user-card__user-name">
                 <!-- Обратите внимание, что "звёздочка только" у верифицированных пользователей -->
-                <svg width="20" height="20" aria-hidden="true">
+                <svg class="user-card__user-icon" width="20" height="20" aria-hidden="true">
                     <use xlink:href="#icon-star"></use>
                 </svg>
                 <span>Неопознанный енот</span>

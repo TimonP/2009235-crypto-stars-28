@@ -1,14 +1,16 @@
 import {isEscapeKey, isEnterKey} from './utils.js';
-import {autocompleteModalForm} from './modal-check-and-autocomplete.js';
+import {autocompleteModalForm} from './modal-autocomplete.js';
 
 const modalSellElement = document.querySelector('.modal--sell');
 const modalSellCloseElement = modalSellElement.querySelector('.modal__close-btn');
 const modalSellWindow = modalSellElement.querySelector('.modal__overlay');
+const modalSellForm = modalSellElement.querySelector('.modal-sell');
 
 
 const modalBuyElement = document.querySelector('.modal--buy');
 const modalBuyCloseElement = modalBuyElement.querySelector('.modal__close-btn');
 const modalBuyWindow = modalBuyElement.querySelector('.modal__overlay');
+const modalBuyForm = modalBuyElement.querySelector('.modal-buy');
 
 const modalElements = document.querySelectorAll('.modal');
 const tableModalOpenElementList = document.querySelector('.users-list__table-body');
@@ -112,6 +114,14 @@ function closeModal () {
 
   document.body.classList.remove('scroll-lock');
   document.removeEventListener('keydown', onDocumentKeydownEscape);
+
+  resetForm();
+}
+
+function resetForm () {
+  modalSellForm.reset();
+  modalBuyForm.reset();
+  //pristine.reset();
 }
 
 

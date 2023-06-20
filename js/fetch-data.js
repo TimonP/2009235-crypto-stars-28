@@ -5,7 +5,7 @@ import {beginListenListTypeButtons} from './toogle-list-map.js';
 import {addCounterpartiesList} from './add-counterparties-list.js';
 import {createPoints, initMap} from './add-map.js';
 import {saveСounterpartiesData ,findModalOpenElements} from './modal-close-open.js';
-import {saveUserData} from './modal-check-and-autocomplete.js';
+import {saveUserData} from './modal-autocomplete.js';
 
 const fetchData = async () => {
   try {

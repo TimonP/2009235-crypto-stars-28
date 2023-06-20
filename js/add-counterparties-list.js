@@ -11,7 +11,7 @@ const counterpartyTemplateElementClasses = [
   {
     tableItem: {
       name: '.users-list__table-name span',
-      verifiedImg: '.users-list__table-name svg',
+      verifiedImg: '.users-list__table-icon',
       currency: '.users-list__table-currency',
       exchangeRate: '.users-list__table-exchangerate',
       cashlimit: '.users-list__table-cashlimit',
@@ -21,7 +21,7 @@ const counterpartyTemplateElementClasses = [
   }, {
     mapBaloon: {
       name: '.user-card__user-name span',
-      verifiedImg: '.user-card__user-name svg',
+      verifiedImg: '.user-card__user-icon',
       currency: '.user-card__cash-currency',
       exchangeRate: '.user-card__cash-exchangerate',
       cashlimit: '.user-card__cash-cashlimit',
@@ -36,6 +36,12 @@ const findClassesUsed = (template) => {
   return classesUsed[template];
 };
 
+const toComfortableView = (value) => {
+  const valueBeforeDot = +(`${ value}`).split('.')[0];
+  const valueAfterDot = (`${ value}`).split('.')[1];
+  return valueAfterDot ? `${valueBeforeDot.toLocaleString() }.${ valueAfterDot.slice(0, 2)}` : valueBeforeDot;
+};
+
 const createCounterpartyElement = (counterpartyElement, counterparty, classes) => {
   counterpartyElement.querySelector([classes.name]).textContent = counterparty.userName;
   if (!counterparty.isVerified) {
@@ -44,7 +50,6 @@ const createCounterpartyElement = (counterpartyElement, counterparty, classes) =
 
   counterpartyElement.querySelector([classes.currency]).textContent = counterparty.balance.currency;
 
-  const toComfortableView = (value) => Math.trunc(value).toLocaleString();
   counterpartyElement.querySelector([classes.exchangeRate]).textContent = `${ toComfortableView(counterparty.exchangeRate) } ₽`;
 
   if (counterparty.status === 'seller') {
@@ -88,4 +93,4 @@ const addMapPointBaloon = (counterparty) => {
 };
 
 
-export {addCounterpartiesList, addMapPointBaloon};
+export {addCounterpartiesList, addMapPointBaloon, toComfortableView};

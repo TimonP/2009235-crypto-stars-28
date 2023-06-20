@@ -1,6 +1,6 @@
 const userProfile = document.querySelector('.user-profile');
-const userCryptoBalance = userProfile.querySelector('#user-crypto-balance');
-const userFiatBalance = userProfile.querySelector('#user-fiat-balance');
+const userCryptoBalance = userProfile.querySelector('.user-profile__cash-balance--keks');
+const userFiatBalance = userProfile.querySelector('.user-profile__cash-balance--rub');
 const userName = userProfile.querySelector('.user-profile__name span');
 
 const Currency = {
@@ -20,4 +20,4 @@ const showUserParameters = (receivedData) => {
   }
 };
 
-export {showUserParameters};
+export {showUserParameters, findBalance, Currency};
