@@ -304,10 +304,10 @@
                         вообще отправляется скрытыми
                     -->
                     <input type="hidden" name="type" value="BUY">
-                    <input type="hidden" name="contractorId">
-                    <input type="hidden" name="exchangeRate">
-                    <input type="hidden" name="sendingCurrency">
-                    <input type="hidden" name="receivingCurrency">
+                    <input class="contractor-id" type="hidden" name="contractorId">
+                    <input class="exchange-rate" type="hidden" name="exchangeRate">
+                    <input class="sending-currency" type="hidden" name="sendingCurrency">
+                    <input class="receiving-currency" type="hidden" name="receivingCurrency">
 
                     <div class="transaction-info">
                         <p class="transaction-info__item transaction-info__item--name"><span
@@ -316,20 +316,20 @@
                                     <use xlink:href="#icon-star"></use>
                                 </svg>John Smith</span></p>
                         <p class="transaction-info__item transaction-info__item--exchangerate"><span
-                                class="transaction-info__label">Курс</span><span class="transaction-info__data">9 999
+                                class="transaction-info__label">Курс</span><span class="transaction-info__data transaction-info__data--exchangerate">9 999
                                 999&nbsp;₽</span></p>
                         <p class="transaction-info__item transaction-info__item--cashlimit"><span
-                                class="transaction-info__label">Лимит</span><span class="transaction-info__data">9 999
+                                class="transaction-info__label">Лимит</span><span class="transaction-info__data transaction-info__data--cashlimit">9 999
                                 999&nbsp;₽&nbsp;-&nbsp;9 999 999 000&nbsp;₽</span></p>
                     </div>
                     <div class="modal__container modal__container--small">
                         <div class="modal__input-wrapper modal__input-wrapper--min">
-                            <div class="custom-input">
+                            <div class="custom-input custom-input__error-wrapper">
                                 <label><span class="custom-input__label">Оплата</span><span
                                         class="custom-input__unit">₽</span>
-                                    <button class="btn btn--textblue custom-input__btn" type="button" id="buy-sending-amount-all">обменять все
+                                    <button class="btn btn--textblue custom-input__btn sending-amount-all" type="button">обменять все
                                     </button>
-                                    <input type="number" value="" placeholder="0" name="sendingAmount" required id="buy-sending-amount" step="any">
+                                    <input class="sending-amount" type="number" value="" placeholder="0" name="sendingAmount" required step="any">
                                 </label>
                                 <!-- Пример стилизации ошибки валидации -->
                                 <div class="custom-input__error">Минимальная сумма — 9 999 999 ₽</div>
@@ -339,24 +339,25 @@
                             <use xlink:href="#icon-arrow-right"></use>
                         </svg>
                         <div class="modal__input-wrapper modal__input-wrapper--min">
-                            <div class="custom-input">
+                            <div class="custom-input custom-input__error-wrapper">
                                 <label><span class="custom-input__label">Зачисление</span><span
                                         class="custom-input__unit">KEKS</span>
-                                    <input type="number" placeholder="0" name="receivingAmount" required id="buy-receiving-amount" step="any">
+                                    <input class="receiving-amount" type="number" placeholder="0" name="receivingAmount" required step="any">
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <div class="modal__container">
+                    <div class="modal__container modal__container--payment">
                         <div class="modal__select-wrapper">
-                            <div class="select"><span>Плaтёжная система</span>
+                            <div class="select custom-input__error-wrapper">
+                              <span>Плaтёжная система</span>
                                 <!--
                                     При отрисовке в списке платёжных систем нужно отразить только те,
                                     которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                                     остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                                 -->
-                                <select name="paymentMethod" required id="counterparty-paymentMethods-provider">
-                                    <option selected disabled>Выберите платёжную систему</option>
+                                <select class="payment-methods-provider" name="paymentMethod">
+                                    <option class="payment-methods-provider-default" selected disabled>Выберите платёжную систему</option>
                                     <option>CryptoEx</option>
                                     <option>Первый криптобанк</option>
                                     <option>BitTransfer</option>
@@ -368,21 +369,21 @@
                             <div class="custom-input">
                                 <!-- В случае, если выбрана оплата наличными, поле нужно оставить пустым -->
                                 <label><span class="custom-input__label">Номер банковской карты пользователя</span>
-                                    <input type="text" placeholder="1234 5678 9012 3456" disabled id="counterparty-paymentMethods-accountNumber">
+                                    <input class="payment-account-number" type="text" placeholder="1234 5678 9012 3456" disabled>
                                 </label>
                             </div>
                         </div>
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Номер криптокошелька пользователя</span>
-                                    <input type="text" placeholder="08701943851-9832345" disabled id="user-wallet-address">
+                                    <input class="wallet-address" type="text" placeholder="08701943851-9832345" disabled>
                                 </label>
                             </div>
                         </div>
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
-                            <div class="custom-input">
+                            <div class="custom-input custom-input__error-wrapper">
                                 <label><span class="custom-input__label">Платёжный пароль</span>
-                                    <input type="password" value="123456" placeholder="Введите пароль" name="paymentPassword" required>
+                                    <input class="payment-password" type="password" value="123456" placeholder="Введите пароль" name="paymentPassword" required>
                                 </label>
                             </div>
                         </div>
@@ -432,10 +433,10 @@
                         вообще отправляется скрытыми
                     -->
                     <input type="hidden" name="type" value="SELL">
-                    <input type="hidden" name="contractorId">
-                    <input type="hidden" name="exchangeRate">
-                    <input type="hidden" name="sendingCurrency">
-                    <input type="hidden" name="receivingCurrency">
+                    <input class="contractor-id" type="hidden" name="contractorId">
+                    <input class="exchange-rate" type="hidden" name="exchangeRate">
+                    <input class="sending-currency" type="hidden" name="sendingCurrency">
+                    <input class="receiving-currency" type="hidden" name="receivingCurrency">
 
                     <div class="transaction-info">
                         <p class="transaction-info__item transaction-info__item--name">
@@ -449,23 +450,23 @@
                         </p>
                         <p class="transaction-info__item transaction-info__item--exchangerate">
                             <span class="transaction-info__label">Курс</span>
-                            <span class="transaction-info__data">9 999 999&nbsp;₽</span>
+                            <span class="transaction-info__data transaction-info__data--exchangerate">9 999 999&nbsp;₽</span>
                         </p>
                         <p class="transaction-info__item transaction-info__item--cashlimit">
                             <span class="transaction-info__label">Лимит</span>
-                            <span class="transaction-info__data">9 999 999&nbsp;₽&nbsp;-&nbsp;9 999 999
+                            <span class="transaction-info__data transaction-info__data--cashlimit">9 999 999&nbsp;₽&nbsp;-&nbsp;9 999 999
                                 000&nbsp;₽</span>
                         </p>
                     </div>
                     <div class="modal__container">
                         <div class="modal__input-wrapper modal__input-wrapper--min">
-                            <div class="custom-input">
+                            <div class="custom-input custom-input__error-wrapper">
                                 <label>
                                     <span class="custom-input__label">Оплата</span>
                                     <span class="custom-input__unit">KEKS</span>
-                                    <button class="btn btn--textblue custom-input__btn" type="button" id="sell-sending-amount-all">обменять
+                                    <button class="btn btn--textblue custom-input__btn sending-amount-all" type="button">обменять
                                         все</button>
-                                    <input type="number" value="" placeholder="0" name="sendingAmount" required id="sell-sending-amount" step="any">
+                                    <input class="sending-amount" type="number" value="" placeholder="0" name="sendingAmount" required step="any">
                                 </label>
                                 <div class="custom-input__error">Минимальная сумма — 9 999 999 ₽</div>
                             </div>
@@ -474,33 +475,33 @@
                             <use xlink:href="#icon-arrow-right"></use>
                         </svg>
                         <div class="modal__input-wrapper modal__input-wrapper--min">
-                            <div class="custom-input">
+                            <div class="custom-input custom-input__error-wrapper">
                                 <label><span class="custom-input__label">Зачисление</span><span
                                         class="custom-input__unit">₽</span>
-                                    <button class="btn btn--textblue custom-input__btn" type="button" id="sell-receiving-amount-all">обменять все
+                                    <button class="btn btn--textblue custom-input__btn receiving-amount-all" type="button">обменять все
                                     </button>
-                                    <input type="number" value="" placeholder="0" name="receivingAmount" required id="sell-receiving-amount" step="any">
+                                    <input class="receiving-amount" type="number" value="" placeholder="0" name="receivingAmount" required step="any">
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <div class="modal__container">
+                    <div class="modal__container modal__container--payment">
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Номер криптокошелька пользователя</span>
-                                    <input type="text" placeholder="08701943851-983457-2345" disabled id="counterparty-wallet-address">
+                                    <input class="wallet-address" type="text" placeholder="08701943851-983457-2345" disabled>
                                 </label>
                             </div>
                         </div>
                         <div class="modal__select-wrapper">
-                            <div class="select"><span>Плaтёжная система</span>
+                            <div class="select custom-input__error-wrapper"><span>Плaтёжная система</span>
                                 <!--
                                     При отрисовке в списке платёжных систем нужно отразить только те,
                                     которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                                     остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                                 -->
-                                <select required id="user-paymentMethods-provider">
-                                    <option selected disabled>Выберите платёжную систему</option>
+                                <select class="payment-methods-provider" name="paymentMethod">
+                                    <option class="payment-methods-provider-default" selected disabled>Выберите платёжную систему</option>
                                     <option>CryptoEx</option>
                                     <option>Первый криптобанк</option>
                                     <option>BitTransfer</option>
@@ -512,14 +513,14 @@
                             <div class="custom-input">
                                 <!-- В случае, если выбрана оплата наличными, поле нужно оставить пустым -->
                                 <label><span class="custom-input__label">Номер банковской карты пользователя</span>
-                                    <input type="text" placeholder="1234 5678 9012 3456" disabled id="user-paymentMethods-accountNumber">
+                                    <input class="payment-account-number" type="text" placeholder="1234 5678 9012 3456" disabled>
                                 </label>
                             </div>
                         </div>
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
-                            <div class="custom-input">
+                            <div class="custom-input custom-input__error-wrapper">
                                 <label><span class="custom-input__label">Платёжный пароль</span>
-                                    <input type="password" placeholder="Введите пароль" name="paymentPassword" required>
+                                    <input class="payment-password" type="password" placeholder="Введите пароль" name="paymentPassword" required>
                                 </label>
                             </div>
                         </div>
@@ -527,7 +528,7 @@
                         </button>
                         <!-- Сообщение, которое нужно показать в случае неудачной отправки данных -->
                         <p class="modal__validation-message modal__validation-message--error">
-                            <svg width="20" height="20" aria-hidden="true">
+                            <svg class="modal__validation-message--error-icon" width="20" height="20" aria-hidden="true">
                                 <use xlink:href="#icon-error"></use>
                             </svg>Ошибка заполнения формы
                         </p>

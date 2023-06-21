@@ -812,6 +812,7 @@ button,
 
 .modal__validation-message--error {
   color: #ed7358;
+  margin-top: 16px;
 }
 
 .modal__validation-message--success {

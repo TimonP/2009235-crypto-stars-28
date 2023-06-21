@@ -39,7 +39,7 @@ const findClassesUsed = (template) => {
 const toComfortableView = (value) => {
   const valueBeforeDot = +(`${ value}`).split('.')[0];
   const valueAfterDot = (`${ value}`).split('.')[1];
-  return valueAfterDot ? `${valueBeforeDot.toLocaleString() }.${ valueAfterDot.slice(0, 2)}` : valueBeforeDot;
+  return valueAfterDot ? `${valueBeforeDot.toLocaleString() }.${ valueAfterDot.slice(0, 2)}` : valueBeforeDot.toLocaleString();
 };
 
 const createCounterpartyElement = (counterpartyElement, counterparty, classes) => {

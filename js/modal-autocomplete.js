@@ -1,13 +1,22 @@
 import {toComfortableView} from './add-counterparties-list.js';
 import {findBalance, Currency} from './show-user-parameters.js';
+import {saveCounterpartyDataForCheck, saveUserDataForCheck, pristineBuyForm, pristineSellForm} from './modal-check.js';
 
 const modalBuyElement = document.querySelector('.modal--buy');
-const counterpartyPaymentMethodsList = modalBuyElement.querySelector('#counterparty-paymentMethods-provider');
-const counterpartyAccountNumberInput = modalBuyElement.querySelector('#counterparty-paymentMethods-accountNumber');
+const counterpartyPaymentMethodsList = modalBuyElement.querySelector('.payment-methods-provider');
+const counterpartyAccountNumberInput = modalBuyElement.querySelector('.payment-account-number');
+const buySendingAmountInput = modalBuyElement.querySelector('.sending-amount');
+const buyReceivingAmountInput = modalBuyElement.querySelector('.receiving-amount');
 
 const modalSellElement = document.querySelector('.modal--sell');
-const userPaymentMethodsList = modalSellElement.querySelector('#user-paymentMethods-provider');
-const userAccountNumberInput = modalSellElement.querySelector('#user-paymentMethods-accountNumber');
+const userPaymentMethodsList = modalSellElement.querySelector('.payment-methods-provider');
+const userAccountNumberInput = modalSellElement.querySelector('.payment-account-number');
+const sellSendingAmountInput = modalSellElement.querySelector('.sending-amount');
+const sellReceivingAmountInput = modalSellElement.querySelector('.receiving-amount');
+
+const buySendingAmountAllButton = modalBuyElement.querySelector('.sending-amount-all');
+const sellSendingAmountAllButton = modalSellElement.querySelector('.sending-amount-all');
+const sellReceivingAmountAllButton = modalSellElement.querySelector('.receiving-amount-all');
 
 const verifiedUserIcon = modalBuyElement.querySelector('.transaction-info__data--icon');
 
@@ -21,7 +30,7 @@ const saveUserData = (data) => {
 
 
 const addPaymentMethodsList = (paymentMethodsListElement, savedAccountData) => {
-  const paymentMethodOptionDefault = paymentMethodsListElement.querySelector('option[selected][disabled]');
+  const paymentMethodOptionDefault = paymentMethodsListElement.querySelector('.payment-methods-provider-default');
   paymentMethodsListElement.innerHTML = '';
   paymentMethodsListElement.appendChild(paymentMethodOptionDefault);
   savedAccountData.paymentMethods.forEach((paymentMethod) => {
@@ -40,25 +49,28 @@ const autocompleteCounterpartyData = (modalElement) => {
   }
 
   /*отображение курса*/
-  const counterpartyExchangeRate = modalElement.querySelector('.transaction-info__item--exchangerate .transaction-info__data');
+  const counterpartyExchangeRate = modalElement.querySelector('.transaction-info__data--exchangerate');
   counterpartyExchangeRate.textContent = `${ toComfortableView(savedCounterpartyData.exchangeRate) } ₽`;
 
+  /*очищение пароля*/
+  const passwordInput = modalElement.querySelector('.payment-password');
+  passwordInput.value = '';
 
-  /*----заполнение скрытых полей----*/
+  /*удаление пароля class="payment-password"*/
   /*ID контрагента*/
-  const counterpartyIdInput = modalElement.querySelector('input[name="contractorId"]');
+  const counterpartyIdInput = modalElement.querySelector('.contractor-id');
   counterpartyIdInput.value = savedCounterpartyData.id;
 
   /*курс контрагента*/
-  const counterpartyExchangeRateInput = modalElement.querySelector('input[name="exchangeRate"]');
+  const counterpartyExchangeRateInput = modalElement.querySelector('.exchange-rate');
   counterpartyExchangeRateInput.value = savedCounterpartyData.exchangeRate;
 
   /*----общие константы для покупки/продажи----*/
-  const counterpartyCashlimit = modalElement.querySelector('.transaction-info__item--cashlimit .transaction-info__data');
+  const counterpartyCashlimit = modalElement.querySelector('.transaction-info__data--cashlimit');
 
   /* общие константы для скрытых полей */
-  const counterpartySendingCurrencyInput = modalElement.querySelector('input[name="sendingCurrency"]');
-  const counterpartyReceivingCurrencyInput = modalElement.querySelector('input[name="receivingCurrency"]');
+  const counterpartySendingCurrencyInput = modalElement.querySelector('.sending-currency');
+  const counterpartyReceivingCurrencyInput = modalElement.querySelector('.receiving-currency');
 
   /* ПОКУПКА */
   if (savedCounterpartyData.status === 'seller') {
@@ -69,7 +81,7 @@ const autocompleteCounterpartyData = (modalElement) => {
     addPaymentMethodsList(counterpartyPaymentMethodsList, savedCounterpartyData);
 
     /*отображение криптокошелька пользователя*/
-    const userWalletAddressInput = modalElement.querySelector('#user-wallet-address');
+    const userWalletAddressInput = modalElement.querySelector('.wallet-address');
     userWalletAddressInput.value = savedUserData.wallet.address;
 
     /*Обмен RUB на KEKS (заполнение скрытых полей)*/
@@ -86,7 +98,7 @@ const autocompleteCounterpartyData = (modalElement) => {
     addPaymentMethodsList(userPaymentMethodsList, savedUserData);
 
     /*отображение криптокошелька контрагента*/
-    const counterpartyWalletAddressInput = modalElement.querySelector('#counterparty-wallet-address');
+    const counterpartyWalletAddressInput = modalElement.querySelector('.wallet-address');
     counterpartyWalletAddressInput.value = savedCounterpartyData.wallet.address;
 
     /*Обмен KEKS на RUB (заполнение скрытых полей)*/
@@ -103,6 +115,8 @@ const autocompleteModalForm = (counterpartyData) => {
   if (counterpartyData.status === 'buyer') {
     autocompleteCounterpartyData(modalSellElement);
   }
+  saveCounterpartyDataForCheck(savedCounterpartyData);
+  saveUserDataForCheck(savedUserData);
   console.log(savedCounterpartyData);
 };
 
@@ -141,55 +155,54 @@ const convertRubToKeks = (value) => {
 };
 
 /*ПОКУПКА*/
-const buySendingAmountInput = modalBuyElement.querySelector('#buy-sending-amount');
-const buyReceivingAmountInput = modalBuyElement.querySelector('#buy-receiving-amount');
-
 const onBuySendingAmountChange = (evt) => {
-  buyReceivingAmountInput.value = convertRubToKeks(evt.target.value);
+  buyReceivingAmountInput.value = +convertRubToKeks(evt.target.value);
+  pristineBuyForm.validate(buyReceivingAmountInput);
 };
 buySendingAmountInput.addEventListener('input', onBuySendingAmountChange);
 
 const onBuyReceivingAmountChange = (evt) => {
-  buySendingAmountInput.value = convertKeksToRub(evt.target.value);
+  buySendingAmountInput.value = +convertKeksToRub(evt.target.value);
+  pristineBuyForm.validate(buySendingAmountInput);
 };
 buyReceivingAmountInput.addEventListener('input', onBuyReceivingAmountChange);
 
 /*ПРОДАЖА*/
-const sellSendingAmountInput = modalSellElement.querySelector('#sell-sending-amount');
-const sellReceivingAmountInput = modalSellElement.querySelector('#sell-receiving-amount');
-
 const onSellSendingAmountChange = (evt) => {
   sellReceivingAmountInput.value = convertKeksToRub(evt.target.value);
+  pristineSellForm.validate(sellReceivingAmountInput);
 };
 sellSendingAmountInput.addEventListener('input', onSellSendingAmountChange);
 
 const onSellReceivingAmountChange = (evt) => {
   sellSendingAmountInput.value = convertRubToKeks(evt.target.value);
+  pristineSellForm.validate(sellSendingAmountInput);
 };
 sellReceivingAmountInput.addEventListener('input', onSellReceivingAmountChange);
 
 /*Обменять все*/
-/*Обменять все*/
-const buySendingAmountAllButton = modalBuyElement.querySelector('#buy-sending-amount-all');
-const sellSendingAmountAllButton = modalSellElement.querySelector('#sell-sending-amount-all');
-const sellReceivingAmountAllButton = modalSellElement.querySelector('#sell-receiving-amount-all');
-
 buySendingAmountAllButton.addEventListener('click', () => {
   const foundUserRubBalance = findBalance(savedUserData, Currency.RUSSIA);
   buySendingAmountInput.value = foundUserRubBalance;
   buyReceivingAmountInput.value = convertRubToKeks(foundUserRubBalance);
+  pristineBuyForm.validate(buySendingAmountInput);
+  pristineBuyForm.validate(buyReceivingAmountInput);
 });
 
 sellSendingAmountAllButton.addEventListener('click', () => {
   const foundUserKeksBalance = findBalance(savedUserData, Currency.HTML_ACADEMY);
   sellSendingAmountInput.value = foundUserKeksBalance;
   sellReceivingAmountInput.value = convertKeksToRub(foundUserKeksBalance);
+  pristineSellForm.validate(sellSendingAmountInput);
+  pristineSellForm.validate(sellReceivingAmountInput);
 });
 
 sellReceivingAmountAllButton.addEventListener('click', () => {
   const foundCounterpartyRubBalance = savedCounterpartyData.balance.amount;
   sellReceivingAmountInput.value = foundCounterpartyRubBalance;
   sellSendingAmountInput.value = convertRubToKeks(foundCounterpartyRubBalance);
+  pristineSellForm.validate(sellSendingAmountInput);
+  pristineSellForm.validate(sellReceivingAmountInput);
 });
 
-export {saveUserData, autocompleteModalForm};
+export {saveUserData, autocompleteModalForm, convertKeksToRub, convertRubToKeks};

@@ -1,5 +1,6 @@
 import {isEscapeKey, isEnterKey} from './utils.js';
 import {autocompleteModalForm} from './modal-autocomplete.js';
+import {pristineBuyForm, pristineSellForm} from './modal-check.js';
 
 const modalSellElement = document.querySelector('.modal--sell');
 const modalSellCloseElement = modalSellElement.querySelector('.modal__close-btn');
@@ -105,23 +106,28 @@ function closeModal () {
   modalElements.forEach((modalElement) => {
     if (modalElement.style.display !== 'none' && modalElement.classList.contains('modal--buy')) {
       manageCloseModalElements(modalBuyElement, modalBuyCloseElement, modalBuyWindow);
+      modalBuyForm.reset();
+      pristineBuyForm.reset();
     }
 
     if (modalElement.style.display !== 'none' && modalElement.classList.contains('modal--sell')) {
       manageCloseModalElements(modalSellElement, modalSellCloseElement, modalSellWindow);
+      modalSellForm.reset();
+      pristineSellForm.reset();
+    }
+
+    const modalErrorMessage = modalElement.querySelector('.modal__validation-message--error');
+    if (modalErrorMessage) {
+      modalErrorMessage.remove();
+    }
+    const modalSuccessMessage = modalElement.querySelector('.modal__validation-message--success');
+    if (modalSuccessMessage) {
+      modalSuccessMessage.remove();
     }
   });
 
   document.body.classList.remove('scroll-lock');
   document.removeEventListener('keydown', onDocumentKeydownEscape);
-
-  resetForm();
-}
-
-function resetForm () {
-  modalSellForm.reset();
-  modalBuyForm.reset();
-  //pristine.reset();
 }
 
 
