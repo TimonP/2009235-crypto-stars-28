@@ -11,6 +11,7 @@ const modalBuyForm = modalBuyElement.querySelector('.modal-buy');
 const modalBuyPaymentWrapper = modalBuyForm.querySelector('.modal__container--payment');
 const modalBuyErrorMessage = modalBuyPaymentWrapper.querySelector('.modal__validation-message--error');
 const modalBuySuccessMessage = modalBuyPaymentWrapper.querySelector('.modal__validation-message--success');
+const modalBuyMessage = modalBuyPaymentWrapper.querySelector('.modal__validation-message');
 const modalBuySubmitButton = modalBuyPaymentWrapper.querySelector('.modal__submit');
 
 
@@ -19,7 +20,11 @@ const modalSellForm = modalSellElement.querySelector('.modal-sell');
 const modalSellPaymentWrapper = modalSellForm.querySelector('.modal__container--payment');
 const modalSellErrorMessage = modalSellPaymentWrapper.querySelector('.modal__validation-message--error');
 const modalSellSuccessMessage = modalSellPaymentWrapper.querySelector('.modal__validation-message--success');
+const modalSellMessage = modalBuyPaymentWrapper.querySelector('.modal__validation-message');
 const modalSellSubmitButton = modalBuyPaymentWrapper.querySelector('.modal__submit');
+
+const modalErrorMessageIcon = modalSellPaymentWrapper.querySelector('.modal__validation-message--error-icon');
+const modalSuccessMessageIcon = modalSellPaymentWrapper.querySelector('.modal__validation-message--success-icon');
 
 
 modalBuyErrorMessage.remove();
@@ -27,29 +32,43 @@ modalSellErrorMessage.remove();
 modalBuySuccessMessage.remove();
 modalSellSuccessMessage.remove();
 
-const showErrorMessage = (wrapper, modalErrorMessage) => {
-  if (!wrapper.querySelector('.modal__validation-message--error')) {
-    wrapper.appendChild(modalErrorMessage);
-  }
+
+const showHiddenMessage = (modalMessage, wrapper) => {
+  modalMessage.textContent = 'Заполните форму';
+  modalMessage.style.opacity = '0';
+  modalMessage.className = 'modal__validation-message';
+  wrapper.appendChild(modalMessage);
 };
 
-const showSuccessMessage = (wrapper, modalSuccessMessage) => {
-  if (!wrapper.querySelector('.modal__validation-message--success')) {
-    wrapper.appendChild(modalSuccessMessage);
-  }
+const showModalBuyHiddenMessage = () => {
+  showHiddenMessage(modalBuyMessage, modalBuyPaymentWrapper);
 };
 
-const deleteErrorMessage = (wrapper, modalErrorMessage) => {
-  if (wrapper.querySelector('.modal__validation-message--error')) {
-    modalErrorMessage.remove();
-  }
+const showModalSellHiddenMessage = () => {
+  showHiddenMessage(modalSellMessage, modalSellPaymentWrapper);
 };
 
-const deleteSuccessMessage = (wrapper, modalSuccessMessage) => {
-  if (wrapper.querySelector('.modal__validation-message--success')) {
-    modalSuccessMessage.remove();
+
+const showErrorMessage = (modalErrorMessage, text = 'Ошибка заполнения формы') => {
+  if (modalErrorMessage.classList.contains('modal__validation-message--success')) {
+    modalErrorMessage.classList.remove('modal__validation-message--success');
   }
+  modalErrorMessage.classList.add('modal__validation-message--error');
+  modalErrorMessage.removeAttribute('style');
+  modalErrorMessage.textContent = text;
+  modalErrorMessage.insertAdjacentHTML('afterBegin', modalErrorMessageIcon.outerHTML);
 };
+
+const showSuccessMessage = (modalSuccessMessage, text = 'Данные успешно отправлены') => {
+  if (modalSuccessMessage.classList.contains('modal__validation-message--error')) {
+    modalSuccessMessage.classList.remove('modal__validation-message--error');
+  }
+  modalSuccessMessage.classList.add('modal__validation-message--success');
+  modalSuccessMessage.removeAttribute('style');
+  modalSuccessMessage.textContent = text;
+  modalSuccessMessage.insertAdjacentHTML('afterBegin', modalSuccessMessageIcon.outerHTML);
+};
+
 
 const toggleSubmitBtn = (state, submitButton) => {
   if (state === 'blocked') {
@@ -86,11 +105,9 @@ const onSubmitModalForm = () => {
 async function postModalBuyForm (formData) {
   try {
     await sendData(formData);
-    showSuccessMessage(modalBuyPaymentWrapper, modalBuySuccessMessage);
-    deleteErrorMessage(modalBuyPaymentWrapper, modalBuyErrorMessage);
+    showSuccessMessage(modalBuyMessage);
   } catch (err) {
-    showErrorMessage(modalBuyPaymentWrapper, modalBuyErrorMessage);
-    deleteSuccessMessage(modalBuyPaymentWrapper, modalBuySuccessMessage);
+    showErrorMessage(modalBuyMessage);
   } finally {
     toggleSubmitBtn('unblocked', modalBuySubmitButton);
   }
@@ -99,14 +116,12 @@ async function postModalBuyForm (formData) {
 async function postModalSellForm (formData) {
   try {
     await sendData(formData);
-    showSuccessMessage(modalSellPaymentWrapper, modalSellSuccessMessage);
-    deleteErrorMessage(modalSellPaymentWrapper, modalSellErrorMessage);
+    showSuccessMessage(modalSellMessage);
   } catch (err) {
-    showErrorMessage(modalSellPaymentWrapper, modalSellErrorMessage);
-    deleteSuccessMessage(modalSellPaymentWrapper, modalSellSuccessMessage);
+    showErrorMessage(modalSellMessage);
   } finally {
     toggleSubmitBtn('unblocked', modalSellSubmitButton);
   }
 }
 
-export {onSubmitModalForm};
+export {onSubmitModalForm, showModalBuyHiddenMessage, showModalSellHiddenMessage};

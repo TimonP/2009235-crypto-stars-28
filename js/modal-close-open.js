@@ -1,6 +1,7 @@
 import {isEscapeKey, isEnterKey} from './utils.js';
 import {autocompleteModalForm} from './modal-autocomplete.js';
 import {pristineBuyForm, pristineSellForm} from './modal-check.js';
+import {showModalBuyHiddenMessage, showModalSellHiddenMessage} from './post-modal-form.js';
 
 const modalSellElement = document.querySelector('.modal--sell');
 const modalSellCloseElement = modalSellElement.querySelector('.modal__close-btn');
@@ -85,9 +86,11 @@ function openModal (id) {
 
   if (counterpartyData.status === 'seller') {
     manageOpenModalElements(modalBuyElement, modalBuyCloseElement, modalBuyWindow);
+    showModalBuyHiddenMessage();
   }
   if (counterpartyData.status === 'buyer') {
     manageOpenModalElements(modalSellElement, modalSellCloseElement, modalSellWindow);
+    showModalSellHiddenMessage();
   }
 
   document.body.classList.add('scroll-lock');
