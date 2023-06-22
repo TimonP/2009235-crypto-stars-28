@@ -103,6 +103,8 @@ const onSubmitModalForm = () => {
 };
 
 async function postModalBuyForm (formData) {
+  showModalBuyHiddenMessage();
+
   try {
     await sendData(formData);
     showSuccessMessage(modalBuyMessage);
@@ -114,6 +116,8 @@ async function postModalBuyForm (formData) {
 }
 
 async function postModalSellForm (formData) {
+  showModalSellHiddenMessage();
+
   try {
     await sendData(formData);
     showSuccessMessage(modalSellMessage);

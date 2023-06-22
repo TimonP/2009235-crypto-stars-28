@@ -88,24 +88,14 @@ const createPoints = (points) => {
   });
 };
 
-/*Используется после отправки формы*/
-const resetMap = () => {
-  map.setView(startCoordinate, ZOOM);
+/*Используется после закрытия модального окна*/
+const closeMapPopups = () => {
   map.closePopup();
 };
 
 /*Использеутся при переключение между картой и таблицей*/
 const resetMapSize = () => {
   map.invalidateSize();
-};
-
-/*Используются для переключателя проверенных продавцов*/
-const hideMarkerUserGroup = () => {
-  markerUserGroup.clearLayers();
-};
-
-const showMarkerUserGroup = (savedPointsData) => {
-  createPoints(savedPointsData);
 };
 
 /*-----------*/
@@ -121,4 +111,4 @@ map.on('popupopen', () => {
   modalOpenElement.addEventListener('click', startOpenModal);
 });
 
-export {createPoints, resetMap, resetMapSize, initMap, hideMarkerUserGroup, showMarkerUserGroup};
+export {createPoints, closeMapPopups, resetMapSize, initMap};

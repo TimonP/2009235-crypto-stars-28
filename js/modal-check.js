@@ -103,7 +103,7 @@ const validateBuySendingAmount = (value) => {
     return false;
   }
 
-  if (parseInt(value, 10) === 0) {
+  if (value === '0') {
     buySendingAmountMessage = '0 - недопустимое значение';
     return false;
   }
@@ -145,7 +145,7 @@ const validateBuyReceivingAmount = (value) => {
     return false;
   }
 
-  if (parseInt(value, 10) === 0) {
+  if (value === '0') {
     buyReceivingAmountMessage = '0 - недопустимое значение';
     return false;
   }
@@ -184,7 +184,7 @@ const validateSellSendingAmount = (value) => {
     return false;
   }
 
-  if (parseInt(value, 10) === 0) {
+  if (value === '0') {
     sellSendingAmountMessage = '0 - недопустимое значение';
     return false;
   }
@@ -227,7 +227,7 @@ const validateSellReceivingAmount = (value) => {
     return false;
   }
 
-  if (parseInt(value, 10) === 0) {
+  if (value === '0') {
     sellReceivingAmountMessage = '0 - недопустимое значение';
     return false;
   }

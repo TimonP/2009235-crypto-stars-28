@@ -2,6 +2,7 @@ import {isEscapeKey, isEnterKey} from './utils.js';
 import {autocompleteModalForm} from './modal-autocomplete.js';
 import {pristineBuyForm, pristineSellForm} from './modal-check.js';
 import {showModalBuyHiddenMessage, showModalSellHiddenMessage} from './post-modal-form.js';
+import {closeMapPopups} from './add-map.js';
 
 const modalSellElement = document.querySelector('.modal--sell');
 const modalSellCloseElement = modalSellElement.querySelector('.modal__close-btn');
@@ -131,6 +132,8 @@ function closeModal () {
 
   document.body.classList.remove('scroll-lock');
   document.removeEventListener('keydown', onDocumentKeydownEscape);
+
+  closeMapPopups();
 }
 
 

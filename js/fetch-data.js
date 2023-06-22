@@ -2,10 +2,10 @@ import {getUserData, getContractorsData} from './api.js';
 import {showUserParameters} from './show-user-parameters.js';
 import {showServerIsNotAvailableMessage, deleteServerIsNotAvailableMessage} from './server-is-not-available-message.js';
 import {beginListenListTypeButtons} from './toogle-list-map.js';
-import {addCounterpartiesList} from './add-counterparties-list.js';
-import {createPoints, initMap} from './add-map.js';
-import {saveСounterpartiesData ,findModalOpenElements} from './modal-close-open.js';
+import {initMap} from './add-map.js';
+import {saveСounterpartiesData} from './modal-close-open.js';
 import {saveUserData} from './modal-autocomplete.js';
+import {saveСounterpartiesDataSort, beginListenFilterButtons, startSort} from './counterparties-sort.js';
 
 const fetchData = async () => {
   try {
@@ -17,12 +17,12 @@ const fetchData = async () => {
     const responseContractorsData = await getContractorsData();
     console.log(responseContractorsData);
     deleteServerIsNotAvailableMessage();
-    addCounterpartiesList(responseContractorsData);
     initMap();
-    createPoints(responseContractorsData);
-    beginListenListTypeButtons();
     saveСounterpartiesData(responseContractorsData);
-    findModalOpenElements();
+    saveСounterpartiesDataSort(responseContractorsData); //.slice(20, 22)
+    startSort();
+    beginListenFilterButtons();
+    beginListenListTypeButtons();
   } catch (err) {
     showServerIsNotAvailableMessage();
   }
