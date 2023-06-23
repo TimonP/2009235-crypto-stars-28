@@ -1,4 +1,6 @@
-import {resetMapSize} from './add-map.js';
+import {
+  resetMapSize
+} from './add-map.js';
 
 const listTypeButtonsWrapper = document.querySelector('.tabs--toggle-list-map');
 const listTypeButtons = listTypeButtonsWrapper.querySelectorAll('.tabs__control');
@@ -45,4 +47,7 @@ const beginListenListTypeButtons = () => {
   }
 };
 
-export {beginListenListTypeButtons, saveNoResultsMessagAdded};
+export {
+  beginListenListTypeButtons,
+  saveNoResultsMessagAdded
+};

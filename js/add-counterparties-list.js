@@ -11,7 +11,7 @@ const counterpartyTemplateElementClasses = [
   {
     tableItem: {
       name: '.users-list__table-name span',
-      verifiedImg: '.users-list__table-icon',
+      verifiedIcon: '.users-list__table-icon',
       currency: '.users-list__table-currency',
       exchangeRate: '.users-list__table-exchangerate',
       cashlimit: '.users-list__table-cashlimit',
@@ -21,7 +21,7 @@ const counterpartyTemplateElementClasses = [
   }, {
     mapBaloon: {
       name: '.user-card__user-name span',
-      verifiedImg: '.user-card__user-icon',
+      verifiedIcon: '.user-card__user-icon',
       currency: '.user-card__cash-currency',
       exchangeRate: '.user-card__cash-exchangerate',
       cashlimit: '.user-card__cash-cashlimit',
@@ -32,8 +32,9 @@ const counterpartyTemplateElementClasses = [
 ];
 
 const findClassesUsed = (template) => {
-  const classesUsed = counterpartyTemplateElementClasses.find((counterpartyTemplateElementClass) => Object.hasOwn(counterpartyTemplateElementClass, [template]));
-  return classesUsed[template];
+  const findedClassesList = counterpartyTemplateElementClasses.find((counterpartyTemplateElementClass) => Object.hasOwn(counterpartyTemplateElementClass, [template]));
+  const usededClassesList = findedClassesList[template];
+  return usededClassesList;
 };
 
 const toComfortableView = (value) => {
@@ -43,30 +44,55 @@ const toComfortableView = (value) => {
 };
 
 const createCounterpartyElement = (counterpartyElement, counterparty, classes) => {
-  counterpartyElement.querySelector([classes.name]).textContent = counterparty.userName;
-  if (!counterparty.isVerified) {
-    counterpartyElement.querySelector([classes.verifiedImg]).remove();
+  const name = counterparty.userName;
+  const nameClass = classes.name;
+  const nameElement = counterpartyElement.querySelector(nameClass);
+  nameElement.textContent = name;
+
+  const verifiedCounterparty = counterparty.isVerified;
+  const verifiedIconClass = classes.verifiedIcon;
+  const verifiedIconElement = counterpartyElement.querySelector(verifiedIconClass);
+  if (!verifiedCounterparty) {
+    verifiedIconElement.remove();
   }
 
-  counterpartyElement.querySelector([classes.currency]).textContent = counterparty.balance.currency;
+  const balanceCurrency = counterparty.balance.currency;
+  const balanceCurrencyClass = classes.currency;
+  const balanceCurrencyElement = counterpartyElement.querySelector(balanceCurrencyClass);
+  balanceCurrencyElement.textContent = balanceCurrency;
 
-  counterpartyElement.querySelector([classes.exchangeRate]).textContent = `${ toComfortableView(counterparty.exchangeRate) } ₽`;
+  const exchangeRate = counterparty.exchangeRate;
+  const exchangeRateClass = classes.exchangeRate;
+  const exchangeRateElement = counterpartyElement.querySelector(exchangeRateClass);
+  exchangeRateElement.textContent = `${ toComfortableView(exchangeRate) } ₽`;
 
+
+  const minAmount = counterparty.minAmount;
+  const cashlimitClass = classes.cashlimit;
+  const cashlimitElement = counterpartyElement.querySelector(cashlimitClass);
+
+  const paymentMethodsList = counterparty.paymentMethods;
+  const paymentMethodsItemClass = classes.badgesItem;
+  const paymentMethodsListClass = classes.badgesList;
+  const paymentMethodsListElement = counterpartyElement.querySelector(paymentMethodsListClass);
   if (counterparty.status === 'seller') {
-    counterpartyElement.querySelector([classes.cashlimit]).textContent = `${ toComfortableView(counterparty.minAmount) } ₽ - ${ toComfortableView(counterparty.balance.amount * counterparty.exchangeRate)} ₽`;
-    const paymentMethodsList = counterpartyElement.querySelector([classes.badgesList]);
-    paymentMethodsList.innerHTML = '';
-    counterparty.paymentMethods.forEach((paymentMethod) => {
-      const newPaymentMethod = document.createElement('li');
-      newPaymentMethod.classList.add([classes.badgesItem.substring(1)], 'badge');
-      newPaymentMethod.textContent = paymentMethod.provider;
-      paymentMethodsList.appendChild(newPaymentMethod);
+    const sellerBalanceAmountRub = counterparty.balance.amount * counterparty.exchangeRate;
+    cashlimitElement.textContent = `${ toComfortableView(minAmount) } ₽ - ${ toComfortableView(sellerBalanceAmountRub)} ₽`;
+
+    paymentMethodsListElement.innerHTML = '';
+    paymentMethodsList.forEach((paymentMethodItem) => {
+      const newPaymentMethodItem = document.createElement('li');
+      newPaymentMethodItem.classList.add([paymentMethodsItemClass.substring(1)], 'badge');
+      newPaymentMethodItem.textContent = paymentMethodItem.provider;
+      paymentMethodsListElement.appendChild(newPaymentMethodItem);
     });
   }
 
   if (counterparty.status === 'buyer') {
-    counterpartyElement.querySelector([classes.cashlimit]).textContent = `${ toComfortableView(counterparty.minAmount) } ₽ - ${ toComfortableView(counterparty.balance.amount) } ₽`;
-    counterpartyElement.querySelector([classes.badgesList]).remove();
+    const buyerBalanceAmountRub = counterparty.balance.amount;
+    cashlimitElement.textContent = `${ toComfortableView(minAmount) } ₽ - ${ toComfortableView(buyerBalanceAmountRub) } ₽`;
+
+    paymentMethodsListElement.remove();
   }
 
   counterpartyElement.dataset.counterpartyId = counterparty.id;
@@ -75,9 +101,10 @@ const createCounterpartyElement = (counterpartyElement, counterparty, classes) =
 const addCounterpartiesList = (counterpartiesData) => {
   const simularListFragment = document.createDocumentFragment();
 
-  counterpartiesData.forEach((counterparty) => {
+  counterpartiesData.forEach((counterpartyData) => {
     const counterpartyTableItemElement = newCounterpartiesTemplate.cloneNode(true);
-    createCounterpartyElement(counterpartyTableItemElement, counterparty, findClassesUsed('tableItem'));
+    const tableItemClassList = findClassesUsed('tableItem');
+    createCounterpartyElement(counterpartyTableItemElement, counterpartyData, tableItemClassList);
 
     simularListFragment.appendChild(counterpartyTableItemElement);
   });
@@ -85,12 +112,17 @@ const addCounterpartiesList = (counterpartiesData) => {
   counterpartiesList.appendChild(simularListFragment);
 };
 
-const addMapPointBaloon = (counterparty) => {
+const addMapPointBaloon = (counterpartyData) => {
   const counterpartyMapBaloonElement = newBaloonTemplate.cloneNode(true);
-  createCounterpartyElement(counterpartyMapBaloonElement, counterparty, findClassesUsed('mapBaloon'));
+  const mapBaloonClassList = findClassesUsed('mapBaloon');
+  createCounterpartyElement(counterpartyMapBaloonElement, counterpartyData, mapBaloonClassList);
 
   return counterpartyMapBaloonElement;
 };
 
 
-export {addCounterpartiesList, addMapPointBaloon, toComfortableView};
+export {
+  addCounterpartiesList,
+  addMapPointBaloon,
+  toComfortableView
+};

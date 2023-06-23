@@ -1,8 +1,23 @@
-import {isEscapeKey, isEnterKey} from './utils.js';
-import {autocompleteModalForm} from './modal-autocomplete.js';
-import {pristineBuyForm, pristineSellForm} from './modal-check.js';
-import {showModalBuyHiddenMessage, showModalSellHiddenMessage} from './post-modal-form.js';
-import {closeMapPopups} from './add-map.js';
+import {
+  isEscapeKey,
+  isEnterKey
+} from './utils.js';
+import {
+  autocompleteModalForm,
+  listenModalBuyElements,
+  listenModalSellElements
+} from './modal-autocomplete.js';
+import {
+  pristineBuyForm,
+  pristineSellForm
+} from './modal-check.js';
+import {
+  showModalBuyHiddenMessage,
+  showModalSellHiddenMessage
+} from './post-modal-form.js';
+import {
+  closeMapPopups
+} from './add-map.js';
 
 const modalSellElement = document.querySelector('.modal--sell');
 const modalSellCloseElement = modalSellElement.querySelector('.modal__close-btn');
@@ -19,7 +34,7 @@ const modalElements = document.querySelectorAll('.modal');
 const tableModalOpenElementList = document.querySelector('.users-list__table-body');
 
 
-let savedСounterpartiesData = [];
+let savedСounterpartiesData;
 
 const saveСounterpartiesData = (data) => {
   savedСounterpartiesData = data;
@@ -88,10 +103,12 @@ function openModal (id) {
   if (counterpartyData.status === 'seller') {
     manageOpenModalElements(modalBuyElement, modalBuyCloseElement, modalBuyWindow);
     showModalBuyHiddenMessage();
+    listenModalBuyElements(true);
   }
   if (counterpartyData.status === 'buyer') {
     manageOpenModalElements(modalSellElement, modalSellCloseElement, modalSellWindow);
     showModalSellHiddenMessage();
+    listenModalSellElements(true);
   }
 
   document.body.classList.add('scroll-lock');
@@ -112,12 +129,14 @@ function closeModal () {
       manageCloseModalElements(modalBuyElement, modalBuyCloseElement, modalBuyWindow);
       modalBuyForm.reset();
       pristineBuyForm.reset();
+      listenModalBuyElements(false);
     }
 
     if (modalElement.style.display !== 'none' && modalElement.classList.contains('modal--sell')) {
       manageCloseModalElements(modalSellElement, modalSellCloseElement, modalSellWindow);
       modalSellForm.reset();
       pristineSellForm.reset();
+      listenModalSellElements(false);
     }
 
     const modalErrorMessage = modalElement.querySelector('.modal__validation-message--error');
@@ -137,4 +156,8 @@ function closeModal () {
 }
 
 
-export {findModalOpenElements, saveСounterpartiesData, openModal};
+export {
+  findModalOpenElements,
+  saveСounterpartiesData,
+  openModal
+};

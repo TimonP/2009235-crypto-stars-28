@@ -1,5 +1,11 @@
-import {findBalance, Currency} from './show-user-parameters.js';
-import {convertKeksToRub, convertRubToKeks} from './modal-autocomplete.js';
+import {
+  findBalance,
+  Currency
+} from './show-user-parameters.js';
+import {
+  convertKeksToRub,
+  convertRubToKeks
+} from './modal-autocomplete.js';
 
 const modalBuyElement = document.querySelector('.modal--buy');
 const modalBuyForm = modalBuyElement.querySelector('.modal-buy');
@@ -37,23 +43,23 @@ setRequiredMessage(modalSellElement);
 
 
 let savedCounterpartyData;
+let savedUserData;
+
 const saveCounterpartyDataForCheck = (data) => {
   savedCounterpartyData = data;
 };
 
-let savedUserData;
 const saveUserDataForCheck = (data) => {
   savedUserData = data;
 };
 
-/*ПОКУПКА*/
+
 const pristineBuyForm = new Pristine(modalBuyForm, {
   classTo: 'custom-input__error-wrapper',
   errorTextParent: 'custom-input__error-wrapper',
   errorTextClass: 'custom-input__error',
 });
 
-/*ПРОДАЖА*/
 const pristineSellForm = new Pristine(modalSellForm, {
   classTo: 'custom-input__error-wrapper',
   errorTextParent: 'custom-input__error-wrapper',
@@ -90,7 +96,6 @@ pristineSellForm.addValidator(
   validateProvider,
   validateProviderMessage,
 );
-
 
 /*-----*/
 let buySendingAmountMessage = '';
@@ -218,7 +223,6 @@ pristineSellForm.addValidator(
 );
 
 /*-----*/
-
 let sellReceivingAmountMessage = '';
 
 const validateSellReceivingAmount = (value) => {
@@ -255,4 +259,9 @@ pristineBuyForm.addValidator(
   validateSellReceivingAmountMessage,
 );
 
-export {saveCounterpartyDataForCheck, saveUserDataForCheck, pristineBuyForm, pristineSellForm};
+export {
+  saveCounterpartyDataForCheck,
+  saveUserDataForCheck,
+  pristineBuyForm,
+  pristineSellForm
+};

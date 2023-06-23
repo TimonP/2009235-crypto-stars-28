@@ -14,4 +14,7 @@ const deleteServerIsNotAvailableMessage = () => {
   userProfile.remove();
 };
 
-export {showServerIsNotAvailableMessage, deleteServerIsNotAvailableMessage};
+export {
+  showServerIsNotAvailableMessage,
+  deleteServerIsNotAvailableMessage
+};

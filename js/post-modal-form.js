@@ -1,5 +1,10 @@
-import {pristineBuyForm, pristineSellForm} from './modal-check.js';
-import {sendData} from './api.js';
+import {
+  pristineBuyForm,
+  pristineSellForm
+} from './modal-check.js';
+import {
+  sendData
+} from './api.js';
 
 const SubmitButtonText = {
   IDLE: 'Обменять',
@@ -40,14 +45,8 @@ const showHiddenMessage = (modalMessage, wrapper) => {
   wrapper.appendChild(modalMessage);
 };
 
-const showModalBuyHiddenMessage = () => {
-  showHiddenMessage(modalBuyMessage, modalBuyPaymentWrapper);
-};
-
-const showModalSellHiddenMessage = () => {
-  showHiddenMessage(modalSellMessage, modalSellPaymentWrapper);
-};
-
+const showModalBuyHiddenMessage = () => showHiddenMessage(modalBuyMessage, modalBuyPaymentWrapper);
+const showModalSellHiddenMessage = () => showHiddenMessage(modalSellMessage, modalSellPaymentWrapper);
 
 const showErrorMessage = (modalErrorMessage, text = 'Ошибка заполнения формы') => {
   if (modalErrorMessage.classList.contains('modal__validation-message--success')) {
@@ -128,4 +127,8 @@ async function postModalSellForm (formData) {
   }
 }
 
-export {onSubmitModalForm, showModalBuyHiddenMessage, showModalSellHiddenMessage};
+export {
+  onSubmitModalForm,
+  showModalBuyHiddenMessage,
+  showModalSellHiddenMessage
+};

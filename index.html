@@ -329,7 +329,7 @@
                                         class="custom-input__unit">₽</span>
                                     <button class="btn btn--textblue custom-input__btn sending-amount-all" type="button">обменять все
                                     </button>
-                                    <input class="sending-amount" type="number" value="" placeholder="0" name="sendingAmount" required step="any">
+                                    <input class="sending-amount modal-buy-input" type="number" value="" placeholder="0" name="sendingAmount" required step="any">
                                 </label>
                                 <!-- Пример стилизации ошибки валидации -->
                                 <div class="custom-input__error">Минимальная сумма — 9 999 999 ₽</div>
@@ -342,7 +342,7 @@
                             <div class="custom-input custom-input__error-wrapper">
                                 <label><span class="custom-input__label">Зачисление</span><span
                                         class="custom-input__unit">KEKS</span>
-                                    <input class="receiving-amount" type="number" placeholder="0" name="receivingAmount" required step="any">
+                                    <input class="receiving-amount modal-buy-input" type="number" placeholder="0" name="receivingAmount" required step="any">
                                 </label>
                             </div>
                         </div>
@@ -356,7 +356,7 @@
                                     которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                                     остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                                 -->
-                                <select class="payment-methods-provider" name="paymentMethod">
+                                <select class="payment-methods-provider modal-buy-input" name="paymentMethod">
                                     <option class="payment-methods-provider-default" selected disabled>Выберите платёжную систему</option>
                                     <option>CryptoEx</option>
                                     <option>Первый криптобанк</option>
@@ -383,7 +383,7 @@
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
                             <div class="custom-input custom-input__error-wrapper">
                                 <label><span class="custom-input__label">Платёжный пароль</span>
-                                    <input class="payment-password" type="password" value="123456" placeholder="Введите пароль" name="paymentPassword" required>
+                                    <input class="payment-password modal-buy-input" type="password" value="123456" placeholder="Введите пароль" name="paymentPassword" required>
                                 </label>
                             </div>
                         </div>
@@ -466,7 +466,7 @@
                                     <span class="custom-input__unit">KEKS</span>
                                     <button class="btn btn--textblue custom-input__btn sending-amount-all" type="button">обменять
                                         все</button>
-                                    <input class="sending-amount" type="number" value="" placeholder="0" name="sendingAmount" required step="any">
+                                    <input class="sending-amount modal-sell-input" type="number" value="" placeholder="0" name="sendingAmount" required step="any">
                                 </label>
                                 <div class="custom-input__error">Минимальная сумма — 9 999 999 ₽</div>
                             </div>
@@ -480,7 +480,7 @@
                                         class="custom-input__unit">₽</span>
                                     <button class="btn btn--textblue custom-input__btn receiving-amount-all" type="button">обменять все
                                     </button>
-                                    <input class="receiving-amount" type="number" value="" placeholder="0" name="receivingAmount" required step="any">
+                                    <input class="receiving-amount modal-sell-input" type="number" value="" placeholder="0" name="receivingAmount" required step="any">
                                 </label>
                             </div>
                         </div>
@@ -500,7 +500,7 @@
                                     которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                                     остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                                 -->
-                                <select class="payment-methods-provider" name="paymentMethod">
+                                <select class="payment-methods-provider modal-sell-input" name="paymentMethod">
                                     <option class="payment-methods-provider-default" selected disabled>Выберите платёжную систему</option>
                                     <option>CryptoEx</option>
                                     <option>Первый криптобанк</option>
@@ -520,7 +520,7 @@
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
                             <div class="custom-input custom-input__error-wrapper">
                                 <label><span class="custom-input__label">Платёжный пароль</span>
-                                    <input class="payment-password" type="password" placeholder="Введите пароль" name="paymentPassword" required>
+                                    <input class="payment-password modal-sell-input" type="password" placeholder="Введите пароль" name="paymentPassword" required>
                                 </label>
                             </div>
                         </div>

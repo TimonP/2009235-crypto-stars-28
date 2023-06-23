@@ -1,7 +1,10 @@
-import {addMapPointBaloon} from './add-counterparties-list.js';
-import {openModal} from './modal-close-open.js';
+import {
+  addMapPointBaloon
+} from './add-counterparties-list.js';
+import {
+  openModal
+} from './modal-close-open.js';
 
-const mapElement = document.querySelector('.map');
 
 const TILE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const COPYRIGHT = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
@@ -28,6 +31,7 @@ const startCoordinate = {
   lng: 30.31127,
 };
 
+const mapElement = document.querySelector('.map');
 const map = L.map('map-canvas');
 
 const initMap = () => {
@@ -79,7 +83,7 @@ const createPoints = (points) => {
         if (paymentMethod.provider === 'Cash in person') {
           if (point.isVerified) {
             createMarker(point, markerUserVerifiedGroup, iconUserVerified);
-          } else if (!point.isVerified) {
+          } else {
             createMarker(point, markerUserGroup, iconUser);
           }
         }
@@ -88,12 +92,12 @@ const createPoints = (points) => {
   });
 };
 
-/*Используется после закрытия модального окна*/
+
 const closeMapPopups = () => {
   map.closePopup();
 };
 
-/*Использеутся при переключение между картой и таблицей*/
+
 const resetMapSize = () => {
   map.invalidateSize();
 };
@@ -111,4 +115,9 @@ map.on('popupopen', () => {
   modalOpenElement.addEventListener('click', startOpenModal);
 });
 
-export {createPoints, closeMapPopups, resetMapSize, initMap};
+export {
+  createPoints,
+  closeMapPopups,
+  resetMapSize,
+  initMap
+};

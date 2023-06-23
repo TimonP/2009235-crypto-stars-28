@@ -1,8 +1,18 @@
-import {debounce} from './utils.js';
-import {findModalOpenElements} from './modal-close-open.js';
-import {addCounterpartiesList} from './add-counterparties-list.js';
-import {createPoints} from './add-map.js';
-import {saveNoResultsMessagAdded} from './toogle-list-map.js';
+import {
+  debounce
+} from './utils.js';
+import {
+  findModalOpenElements
+} from './modal-close-open.js';
+import {
+  addCounterpartiesList
+} from './add-counterparties-list.js';
+import {
+  createPoints
+} from './add-map.js';
+import {
+  saveNoResultsMessagAdded
+} from './toogle-list-map.js';
 
 const RENDER_DELAY = 500;
 
@@ -14,7 +24,7 @@ const tableList = document.querySelector('.users-list__table-body');
 const noResultsMessage = document.querySelector('.container--lightbackground');
 
 let transactionType = transactionTypeButtonsWrapper.querySelector('.is-active').id;
-let savedСounterpartiesDataSort = [];
+let savedСounterpartiesDataSort;
 
 const saveСounterpartiesDataSort = (data) => {
   savedСounterpartiesDataSort = data;
@@ -77,4 +87,8 @@ const beginListenFilterButtons = () => {
 };
 
 
-export {saveСounterpartiesDataSort, beginListenFilterButtons, startSort};
+export {
+  saveСounterpartiesDataSort,
+  beginListenFilterButtons,
+  startSort
+};

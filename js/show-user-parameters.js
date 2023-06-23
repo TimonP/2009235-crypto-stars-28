@@ -20,4 +20,8 @@ const showUserParameters = (receivedData) => {
   }
 };
 
-export {showUserParameters, findBalance, Currency};
+export {
+  showUserParameters,
+  findBalance,
+  Currency
+};

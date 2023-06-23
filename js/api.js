@@ -32,4 +32,8 @@ const getContractorsData = () => load(Route.GET_CONTRACTORS_DATA);
 
 const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, Method.POST, body);
 
-export {getUserData, getContractorsData, sendData};
+export {
+  getUserData,
+  getContractorsData,
+  sendData
+};
