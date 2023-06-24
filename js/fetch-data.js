@@ -30,10 +30,11 @@ import {
 const fetchData = async () => {
   try {
     const responseUserData = await getUserData();
+    const responseContractorsData = await getContractorsData();
+
     showUserParameters(responseUserData);
     saveUserData(responseUserData);
 
-    const responseContractorsData = await getContractorsData();
     deleteServerIsNotAvailableMessage();
     initMap();
     saveСounterpartiesData(responseContractorsData);

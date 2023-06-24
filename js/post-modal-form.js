@@ -108,7 +108,7 @@ async function postModalBuyForm (formData) {
     await sendData(formData);
     showSuccessMessage(modalBuyMessage);
   } catch (err) {
-    showErrorMessage(modalBuyMessage);
+    showErrorMessage(modalBuyMessage, err.message);
   } finally {
     toggleSubmitBtn('unblocked', modalBuySubmitButton);
   }
@@ -121,7 +121,7 @@ async function postModalSellForm (formData) {
     await sendData(formData);
     showSuccessMessage(modalSellMessage);
   } catch (err) {
-    showErrorMessage(modalSellMessage);
+    showErrorMessage(modalSellMessage, err.message);
   } finally {
     toggleSubmitBtn('unblocked', modalSellSubmitButton);
   }

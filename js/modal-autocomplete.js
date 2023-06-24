@@ -169,12 +169,12 @@ const onChangeUserProvider = (evt) => {
 /*Зависимые поля*/
 /*ПОКУПКА*/
 const onBuySendingAmountChange = (evt) => {
-  buyReceivingAmountInput.value = +convertRubToKeks(evt.target.value);
+  buyReceivingAmountInput.value = convertRubToKeks(evt.target.value);
   pristineBuyForm.validate(buyReceivingAmountInput);
 };
 
 const onBuyReceivingAmountChange = (evt) => {
-  buySendingAmountInput.value = +convertKeksToRub(evt.target.value);
+  buySendingAmountInput.value = convertKeksToRub(evt.target.value);
   pristineBuyForm.validate(buySendingAmountInput);
 };
 
