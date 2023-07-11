@@ -1,3 +1,5 @@
+https://timonp.github.io/2009235-crypto-stars-28/
+
 # Как работать над проектом
 
 ## Окружение
